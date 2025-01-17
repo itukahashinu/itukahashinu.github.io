@@ -3,79 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>バックエンドエンジニア ポートフォリオ</title>
+    <title>山田太郎 - バックエンドエンジニア ポートフォリオ</title>
     <style>
         :root {
-            --bg-color: #1a1a1a;
-            --text-color: #f0f0f0;
-            --accent-color: #4a8fff;
-            --secondary-color: #2ecc71;
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --accent-color: #333333;
+            --secondary-color: #666666;
+            --highlight-color: rgba(255, 255, 255, 0.1);
+            --gradient-start: rgba(40, 40, 40, 0.95);
+            --gradient-end: rgba(0, 0, 0, 0.95);
         }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            margin: 0;
-            padding: 0;
+            overflow-x: hidden;
+            letter-spacing: 0.02em;
         }
+
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
+            width: 100%;
         }
+
+        /* ヘッダーセクション */
         header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
+        }
+
+        .header-content {
             text-align: center;
-            padding: 2rem 0;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1.5s ease forwards;
         }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0) 70%);
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+        }
+
         h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size: 4.5rem;
+            font-weight: 200;
+            margin-bottom: 1rem;
+            letter-spacing: 0.2em;
+            background: linear-gradient(to right, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
         }
+
         .subtitle {
             font-size: 1.2rem;
-            color: var(--accent-color);
+            font-weight: 300;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            opacity: 0.8;
         }
+
+        /* スキルセクション */
         section {
-            margin-bottom: 3rem;
+            padding: 120px 5%;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1.2s ease;
+            background: linear-gradient(var(--gradient-end), var(--gradient-start));
         }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         h2 {
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 0.5rem;
+            font-size: 2.5rem;
+            font-weight: 200;
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
         }
-        .tech-stack, .projects {
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--text-color), transparent);
+        }
+
+        .skills-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .tech-item, .project-item {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            padding: 1rem;
-            transition: transform 0.3s ease;
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            padding: 2.5rem;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: translateX(-50px);
+            backdrop-filter: blur(10px);
         }
-        .tech-item:hover, .project-item:hover {
-            transform: translateY(-5px);
+
+        .skill-card.visible {
+            animation: slideInFromLeft 0.8s ease forwards;
         }
-        .project-item h3 {
-            color: var(--secondary-color);
+
+        .skill-card:hover {
+            animation: shake 0.5s ease infinite;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
+        /* プロジェクトセクション */
+        .projects-container {
+            width: 100%;
+            overflow-x: auto;
+            padding: 2rem 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .projects-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .projects-scroll {
+            display: flex;
+            gap: 3rem;
+            padding: 0 5%;
+            min-width: max-content;
+        }
+
+        .project-card {
+            flex: 0 0 400px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            padding: 2.5rem;
+            transition: all 0.5s ease;
+            opacity: 0;
+            transform: scale(0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .project-card.visible {
+            animation: scaleIn 0.8s ease forwards;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* スキルバー */
+        .skill-bar {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+            margin-top: 1.5rem;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            width: 0;
+            transition: width 1.5s ease;
+        }
+
+        /* フッター */
         footer {
             text-align: center;
-            padding: 2rem 0;
-            background-color: rgba(0, 0, 0, 0.2);
+            padding: 4rem 0;
+            background: linear-gradient(var(--gradient-start), var(--gradient-end));
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+        }
+
         .social-links a {
             color: var(--text-color);
-            margin: 0 10px;
             text-decoration: none;
+            padding: 0.8rem 2rem;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
         }
-        .social-links a:hover {
-            color: var(--accent-color);
+
+        .social-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
         }
+
+        .social-links a:hover::before {
+            transform: translateX(0);
+        }
+
+        /* アニメーション */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes shake {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(1px, 1px); }
+            50% { transform: translate(-1px, -1px); }
+            75% { transform: translate(-1px, 1px); }
+            100% { transform: translate(1px, -1px); }
+        }
+
         @media (max-width: 768px) {
-            .tech-stack, .projects {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .skills-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .project-card {
+                flex: 0 0 300px;
+            }
+
+            .social-links {
+                flex-direction: column;
+                gap: 1rem;
             }
         }
     </style>
@@ -83,84 +307,175 @@
 <body>
     <div class="container">
         <header>
-            <h1>山田 太郎</h1>
-            <p class="subtitle">バックエンドエンジニア</p>
+            <div class="header-bg"></div>
+            <div class="header-content">
+                <h1>YAMADA TARO</h1>
+                <p class="subtitle">Backend Engineer</p>
+            </div>
         </header>
 
         <section id="about">
-            <h2>自己紹介</h2>
-            <p>
-                こんにちは、山田太郎です。バックエンドエンジニアとして5年以上の経験があります。
-                スケーラブルで効率的なシステムの設計と実装に情熱を注いでいます。
-                新しい技術を学ぶことが大好きで、常に最新のトレンドをフォローしています。
+            <h2>About</h2>
+            <p style="max-width: 800px; margin: 0 auto; text-align: center; font-weight: 300; letter-spacing: 0.05em;">
+                バックエンドエンジニアとして5年以上の経験を持ち、大規模システムの設計から実装まで一貫して担当してきました。
+                技術の革新に常に関心を持ち、最新のトレンドを取り入れながら、安定性とスケーラビリティを両立したシステムの構築を得意としています。
             </p>
         </section>
 
         <section id="skills">
-            <h2>技術スタック</h2>
-            <div class="tech-stack">
-                <div class="tech-item">
-                    <h3>Django</h3>
-                    <p>Pythonベースの高速Web開発フレームワーク</p>
+            <h2>Expertise</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3 style="font-weight: 300; letter-spacing: 0.1em;">Django</h3>
+                    <p style="opacity: 0.7; margin-top: 1rem;">高度なバックエンド開発とシステム設計</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90"></div>
+                    </div>
                 </div>
-                <div class="tech-item">
-                    <h3>TypeScript</h3>
-                    <p>型安全な JavaScript スーパーセット</p>
+                <div class="skill-card">
+                    <h3 style="font-weight: 300; letter-spacing: 0.1em;">TypeScript</h3>
+                    <p style="opacity: 0.7; margin-top: 1rem;">型安全な開発環境の構築</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85"></div>
+                    </div>
                 </div>
-                <div class="tech-item">
-                    <h3>Go</h3>
-                    <p>高性能な並行処理言語</p>
-                </div>
-                <div class="tech-item">
-                    <h3>Docker</h3>
-                    <p>コンテナ化とデプロイメントの自動化</p>
-                </div>
-                <div class="tech-item">
-                    <h3>PostgreSQL</h3>
-                    <p>高度なリレーショナルデータベース</p>
-                </div>
-                <div class="tech-item">
-                    <h3>Redis</h3>
-                    <p>高速なインメモリデータストア</p>
+                <div class="skill-card">
+                    <h3 style="font-weight: 300; letter-spacing: 0.1em;">Go</h3>
+                    <p style="opacity: 0.7; margin-top: 1rem;">高性能なマイクロサービスの開発</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80"></div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section id="projects">
-            <h2>主な作品</h2>
-            <div class="projects">
-                <div class="project-item">
-                    <h3>分散型タスク管理システム</h3>
-                    <p>Django と Celery を使用した大規模なタスク処理システム</p>
-                    <p>技術: Django, Celery, Redis, PostgreSQL</p>
-                </div>
-                <div class="project-item">
-                    <h3>リアルタイムチャットアプリケーション</h3>
-                    <p>WebSocket を使用したスケーラブルなチャットシステム</p>
-                    <p>技術: Go, WebSocket, Redis</p>
-                </div>
-                <div class="project-item">
-                    <h3>マイクロサービスアーキテクチャ</h3>
-                    <p>複数の小規模サービスを連携させた大規模システム</p>
-                    <p>技術: TypeScript, Node.js, Docker, Kubernetes</p>
+            <h2>Projects</h2>
+            <div class="projects-container">
+                <div class="projects-scroll">
+                    <div class="project-card">
+                        <h3 style="font-weight: 300; letter-spacing: 0.1em;">分散型タスク管理システム</h3>
+                        <p style="opacity: 0.7; margin-top: 1rem;">大規模データ処理基盤の構築</p>
+                        <ul style="margin-top: 1.5rem; list-style: none;">
+                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• Django & Celery による非同期処理</li>
+                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• Redis によるキャッシュ最適化</li>
+                            <li style="opacity: 0.7;">• PostgreSQL でのデータ永続化</li>
+                        </ul>
+                    </div>
+                    <div class="project-card">
+                        <h3 style="font-weight: 300; letter-spacing: 0.1em;">リアルタイムチャット</h3>
+                        <p style="opacity: 0.7; margin-top: 1rem;">スケーラブルな双方向通信システム</p>
+                        <ul style="margin-top: 1.5rem; list-style: none;">
+                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• Go による高速な処理基盤</li>
+                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• WebSocket プロトコルの実装</li>
+                            <li style="opacity: 0.7;">• Redis Pub/Sub アーキテクチャ</li>
+                        </ul>
+                    </div>
+                    <div class="project-card">
+                        <h3 style="font-weight: 300; letter-spacing: 0.1em;">マイクロサービス基盤</h3>
+                        <p style="opacity: 0.7; margin-top: 1rem;">コンテナ化されたサービス群の統合</p>
+                        <ul style="margin-top: 1.5rem; list-style: none;">
+                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• TypeScript & Node.js</li>
+                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• Docker コンテナオーケストレーション</li>
+                            <li style="opacity: 0.7;">• Kubernetes クラスター管理</li>
+                        </ul>
+                    </div>
+                    <div class="project-card">
+                        <h3 style="font-weight: 300; letter-spacing: 0.1em;">API ゲートウェイ</h3>
+                        <p style="opacity: 0.7; margin-top: 1rem;">セキュアなAPI管理基盤</p>
+                        <ul style="margin-top: 1.5rem; list-style: none;">
+                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• 認証・認可システムの実装</li>
+                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• トラフィック制御と負荷分散</li>
+                            <li style="opacity: 0.7;">• リアルタイムモニタリング</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
 
         <footer>
             <div class="social-links">
-                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                <a href="https://github.com/yourusername" target="_blank">Github</a>
                 <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
-                <a href="mailto:your.email@example.com">Email</a>
+                <a href="mailto:your.email@example.com">Contact</a>
             </div>
         </footer>
     </div>
 
     <script>
-        // ダークモードトグル機能（オプション）
-        function toggleDarkMode() {
-            document.body.classList.toggle('light-mode');
+        // スクロールアニメーション
+        function revealOnScroll() {
+            const sections = document.querySelectorAll('section');
+            const skillCards = document.querySelectorAll('.skill-card');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            const reveal = (elements, className) => {
+                elements.forEach((el, index) => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    const elementBottom = el.getBoundingClientRect().bottom;
+                    const isVisible = (elementTop < window.innerHeight - 50) && (elementBottom > 0);
+                    
+                    if (isVisible) {
+                        setTimeout(() => {
+                            el.classList.add(className);
+                        }, index * 100); // 要素ごとに遅延を付ける
+                    }
+                });
+            };
+
+            reveal(sections, 'visible');
+            reveal(skillCards, 'visible');
+            reveal(projectCards, 'visible');
         }
+
+        // スキルバーのアニメーション
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const width = bar.getAttribute('data-width');
+                setTimeout(() => {
+                    bar.style.width = `${width}%`;
+                }, 500);
+            });
+        }
+
+        // プロジェクトカードのスクロールアニメーション
+        const projectsContainer = document.querySelector('.projects-container');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        projectsContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - projectsContainer.offsetLeft;
+            scrollLeft = projectsContainer.scrollLeft;
+        });
+
+        projectsContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+        });
+
+        projectsContainer.addEventListener('mouseup', () => {
+            isDown = false;
+        });
+
+        projectsContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - projectsContainer.offsetLeft;
+            const walk = (x - startX) * 2;
+            projectsContainer.scrollLeft = scrollLeft - walk;
+        });
+
+        // イベントリスナー
+        window.addEventListener('load', () => {
+            revealOnScroll();
+            animateSkillBars();
+        });
+        
+        window.addEventListener('scroll', () => {
+            revealOnScroll();
+        });
 
         // スムーズスクロール
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -174,3 +489,4 @@
     </script>
 </body>
 </html>
+
