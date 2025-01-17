@@ -1,1 +1,176 @@
-Hello Worldcd itukahashinu.github.io
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>バックエンドエンジニア ポートフォリオ</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --accent-color: #4a8fff;
+            --secondary-color: #2ecc71;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        header {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+        section {
+            margin-bottom: 3rem;
+        }
+        h2 {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        .tech-stack, .projects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .tech-item, .project-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .tech-item:hover, .project-item:hover {
+            transform: translateY(-5px);
+        }
+        .project-item h3 {
+            color: var(--secondary-color);
+        }
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        .social-links a {
+            color: var(--text-color);
+            margin: 0 10px;
+            text-decoration: none;
+        }
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+        @media (max-width: 768px) {
+            .tech-stack, .projects {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>山田 太郎</h1>
+            <p class="subtitle">バックエンドエンジニア</p>
+        </header>
+
+        <section id="about">
+            <h2>自己紹介</h2>
+            <p>
+                こんにちは、山田太郎です。バックエンドエンジニアとして5年以上の経験があります。
+                スケーラブルで効率的なシステムの設計と実装に情熱を注いでいます。
+                新しい技術を学ぶことが大好きで、常に最新のトレンドをフォローしています。
+            </p>
+        </section>
+
+        <section id="skills">
+            <h2>技術スタック</h2>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <h3>Django</h3>
+                    <p>Pythonベースの高速Web開発フレームワーク</p>
+                </div>
+                <div class="tech-item">
+                    <h3>TypeScript</h3>
+                    <p>型安全な JavaScript スーパーセット</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Go</h3>
+                    <p>高性能な並行処理言語</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Docker</h3>
+                    <p>コンテナ化とデプロイメントの自動化</p>
+                </div>
+                <div class="tech-item">
+                    <h3>PostgreSQL</h3>
+                    <p>高度なリレーショナルデータベース</p>
+                </div>
+                <div class="tech-item">
+                    <h3>Redis</h3>
+                    <p>高速なインメモリデータストア</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>主な作品</h2>
+            <div class="projects">
+                <div class="project-item">
+                    <h3>分散型タスク管理システム</h3>
+                    <p>Django と Celery を使用した大規模なタスク処理システム</p>
+                    <p>技術: Django, Celery, Redis, PostgreSQL</p>
+                </div>
+                <div class="project-item">
+                    <h3>リアルタイムチャットアプリケーション</h3>
+                    <p>WebSocket を使用したスケーラブルなチャットシステム</p>
+                    <p>技術: Go, WebSocket, Redis</p>
+                </div>
+                <div class="project-item">
+                    <h3>マイクロサービスアーキテクチャ</h3>
+                    <p>複数の小規模サービスを連携させた大規模システム</p>
+                    <p>技術: TypeScript, Node.js, Docker, Kubernetes</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div class="social-links">
+                <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+                <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+                <a href="mailto:your.email@example.com">Email</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ダークモードトグル機能（オプション）
+        function toggleDarkMode() {
+            document.body.classList.toggle('light-mode');
+        }
+
+        // スムーズスクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
