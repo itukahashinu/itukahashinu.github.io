@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>山田太郎 - バックエンドエンジニア ポートフォリオ</title>
+    <title>itukahashinu - バックエンドエンジニア ポートフォリオ</title>
     <style>
         :root {
             --bg-color: #000000;
@@ -143,9 +143,10 @@
         }
 
         .skill-card:hover {
-            animation: shake 0.5s ease infinite;
+            transform: translateY(-5px);
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
         }
 
         /* プロジェクトセクション */
@@ -229,23 +230,10 @@
             letter-spacing: 0.1em;
             text-transform: uppercase;
             position: relative;
-            overflow: hidden;
         }
 
-        .social-links a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-        }
-
-        .social-links a:hover::before {
-            transform: translateX(0);
+        .social-links a:hover {
+            box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.2);
         }
 
         /* アニメーション */
@@ -276,13 +264,6 @@
             }
         }
 
-        @keyframes shake {
-            0% { transform: translate(0, 0); }
-            25% { transform: translate(1px, 1px); }
-            50% { transform: translate(-1px, -1px); }
-            75% { transform: translate(-1px, 1px); }
-            100% { transform: translate(1px, -1px); }
-        }
 
         @media (max-width: 768px) {
             h1 {
@@ -309,7 +290,7 @@
         <header>
             <div class="header-bg"></div>
             <div class="header-content">
-                <h1>YAMADA TARO</h1>
+                <h1>itukahashinu</h1>
                 <p class="subtitle">Backend Engineer</p>
             </div>
         </header>
@@ -317,7 +298,7 @@
         <section id="about">
             <h2>About</h2>
             <p style="max-width: 800px; margin: 0 auto; text-align: center; font-weight: 300; letter-spacing: 0.05em;">
-                バックエンドエンジニアとして5年以上の経験を持ち、大規模システムの設計から実装まで一貫して担当してきました。
+                バックエンドエンジニアとして中規模システムの設計から実装まで一貫して担当してきました。
                 技術の革新に常に関心を持ち、最新のトレンドを取り入れながら、安定性とスケーラビリティを両立したシステムの構築を得意としています。
             </p>
         </section>
@@ -342,6 +323,13 @@
                 <div class="skill-card">
                     <h3 style="font-weight: 300; letter-spacing: 0.1em;">Go</h3>
                     <p style="opacity: 0.7; margin-top: 1rem;">高性能なマイクロサービスの開発</p>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80"></div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <h3 style="font-weight: 300; letter-spacing: 0.1em;">LI</h3>
+                    <p style="opacity: 0.7; margin-top: 1rem;">システム最適化用アセンブリ言語の開発</p>
                     <div class="skill-bar">
                         <div class="skill-progress" data-width="80"></div>
                     </div>
@@ -395,9 +383,7 @@
 
         <footer>
             <div class="social-links">
-                <a href="https://github.com/yourusername" target="_blank">Github</a>
-                <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
-                <a href="mailto:your.email@example.com">Contact</a>
+                <a href="https://github.com/itukahashinu" target="_blank">Github</a>
             </div>
         </footer>
     </div>
