@@ -3,467 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>itukahashinu - バックエンドエンジニア ポートフォリオ</title>
+    <title>CREA - AI・ITで業務効率化を支援</title>
     <style>
         :root {
-            --bg-color: #000000;
-            --text-color: #ffffff;
-            --accent-color: #333333;
-            --secondary-color: #666666;
-            --highlight-color: rgba(255, 255, 255, 0.1);
-            --gradient-start: rgba(40, 40, 40, 0.95);
-            --gradient-end: rgba(0, 0, 0, 0.95);
+            --primary-color: #000;
+            --secondary-color: #fff;
+            --accent-color: #888;
+            --text-color: #333;
+            --bg-color: #f8f8f8;
         }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
             line-height: 1.6;
-            overflow-x: hidden;
-            letter-spacing: 0.02em;
+            color: var(--text-color);
+            background-color: var(--bg-color);
         }
-
         .container {
-            width: 100%;
-        }
-
-        /* ヘッダーセクション */
-        header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(45deg, var(--gradient-start), var(--gradient-end));
-        }
-
-        .header-content {
-            text-align: center;
-            z-index: 2;
-            opacity: 0;
-            transform: translateY(50px);
-            animation: fadeInUp 1.5s ease forwards;
-        }
-
-        .header-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, rgba(0,0,0,0) 70%);
-            opacity: 0;
-            animation: fadeIn 2s ease forwards;
-        }
-
-        h1 {
-            font-size: 4.5rem;
-            font-weight: 200;
-            margin-bottom: 1rem;
-            letter-spacing: 0.2em;
-            background: linear-gradient(to right, #fff, #888);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            opacity: 0.8;
-        }
-
-        /* スキルセクション */
-        section {
-            padding: 120px 5%;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 1.2s ease;
-            background: linear-gradient(var(--gradient-end), var(--gradient-start));
-        }
-
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            font-weight: 200;
-            text-align: center;
-            margin-bottom: 4rem;
-            position: relative;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
-
-        h2::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--text-color), transparent);
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 3rem;
             max-width: 1200px;
             margin: 0 auto;
+            padding: 0 20px;
         }
-
-        .skill-card {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2px;
-            padding: 2.5rem;
-            transition: all 0.5s ease;
-            opacity: 0;
-            transform: translateX(-50px);
-            backdrop-filter: blur(10px);
-        }
-
-        .skill-card.visible {
-            animation: slideInFromLeft 0.8s ease forwards;
-        }
-
-        .skill-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
-        }
-
-        /* プロジェクトセクション */
-        .projects-container {
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 1rem 0;
+            position: fixed;
             width: 100%;
-            overflow-x: auto;
-            padding: 2rem 0;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .projects-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .projects-scroll {
-            display: flex;
-            gap: 3rem;
-            padding: 0 5%;
-            min-width: max-content;
-        }
-
-        .project-card {
-            flex: 0 0 400px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 2px;
-            padding: 2.5rem;
-            transition: all 0.5s ease;
-            opacity: 0;
-            transform: scale(0.95);
-            backdrop-filter: blur(10px);
-        }
-
-        .project-card.visible {
-            animation: scaleIn 0.8s ease forwards;
-        }
-
-        .project-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* スキルバー */
-        .skill-bar {
-            width: 100%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
-            margin-top: 1.5rem;
-            overflow: hidden;
-        }
-
-        .skill-progress {
-            height: 100%;
-            background: rgba(255, 255, 255, 0.5);
-            width: 0;
-            transition: width 1.5s ease;
-        }
-
-        /* フッター */
-        footer {
-            text-align: center;
-            padding: 4rem 0;
-            background: linear-gradient(var(--gradient-start), var(--gradient-end));
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-        }
-
-        .social-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 0.8rem 2rem;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
-            font-size: 0.9rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            position: relative;
         }
-
-        .social-links a:hover {
-            box-shadow: 0 0 10px 3px rgba(255, 255, 255, 0.2);
+        header.scrolled {
+            padding: 0.5rem 0;
+            background-color: rgba(0, 0, 0, 0.9);
         }
-
-        /* アニメーション */
+        nav ul {
+            display: flex;
+            justify-content: space-around;
+            list-style-type: none;
+        }
+        nav ul li a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        header.scrolled nav ul li a {
+            color: var(--secondary-color);
+        }
+        nav ul li a:hover {
+            color: var(--accent-color);
+        }
+        .hero {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://source.unsplash.com/random/1600x900/?technology,minimal');
+            height: 100vh;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--secondary-color);
+        }
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            letter-spacing: 5px;
+            animation: fadeInUp 1s ease;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease 0.5s;
+            animation-fill-mode: both;
+        }
         @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+        section {
+            padding: 6rem 0;
         }
-
-        @keyframes slideInFromLeft {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+        h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            position: relative;
         }
-
-        @keyframes scaleIn {
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent-color);
+            margin: 20px auto 0;
         }
-
-
+        .services {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+        .service {
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin: 1rem;
+            flex: 1 1 300px;
+            transition: all 0.3s ease;
+        }
+        .service:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        .service h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        footer {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+        }
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            width: 50px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+        .scroll-to-top.show {
+            opacity: 1;
+        }
         @media (max-width: 768px) {
-            h1 {
+            .hero h1 {
                 font-size: 2.5rem;
             }
-            
-            .skills-grid {
-                grid-template-columns: 1fr;
+            .hero p {
+                font-size: 1rem;
             }
-            
-            .project-card {
-                flex: 0 0 300px;
-            }
-
-            .social-links {
+            nav ul {
                 flex-direction: column;
-                gap: 1rem;
+                align-items: center;
+            }
+            nav ul li {
+                margin: 0.5rem 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="header-bg"></div>
-            <div class="header-content">
-                <h1>itukahashinu</h1>
-                <p class="subtitle">Backend Engineer</p>
-            </div>
-        </header>
+    <header>
+        <nav class="container">
+            <ul>
+                <li><a href="#home">ホーム</a></li>
+                <li><a href="#about">企業理念</a></li>
+                <li><a href="#services">サービス</a></li>
+                <li><a href="#industries">対象業界</a></li>
+                <li><a href="#future">目指す未来</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <section id="about">
-            <h2>About</h2>
-            <p style="max-width: 800px; margin: 0 auto; text-align: center; font-weight: 300; letter-spacing: 0.05em;">
-                バックエンドエンジニアとして中規模システムの設計から実装まで一貫して担当してきました。
-                技術の革新に常に関心を持ち、最新のトレンドを取り入れながら、安定性とスケーラビリティを両立したシステムの構築を得意としています。
-            </p>
-        </section>
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>CREA</h1>
+            <p>AIとITで業務効率化を実現し、未来を創造する</p>
+        </div>
+    </section>
 
-        <section id="skills">
-            <h2>Expertise</h2>
-            <div class="skills-grid">
-                <div class="skill-card">
-                    <h3 style="font-weight: 300; letter-spacing: 0.1em;">Django</h3>
-                    <p style="opacity: 0.7; margin-top: 1rem;">高度なバックエンド開発とシステム設計</p>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="90"></div>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <h3 style="font-weight: 300; letter-spacing: 0.1em;">TypeScript</h3>
-                    <p style="opacity: 0.7; margin-top: 1rem;">型安全な開発環境の構築</p>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="85"></div>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <h3 style="font-weight: 300; letter-spacing: 0.1em;">Go</h3>
-                    <p style="opacity: 0.7; margin-top: 1rem;">高性能なマイクロサービスの開発</p>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="80"></div>
-                    </div>
-                </div>
-                <div class="skill-card">
-                    <h3 style="font-weight: 300; letter-spacing: 0.1em;">LI</h3>
-                    <p style="opacity: 0.7; margin-top: 1rem;">システム最適化用アセンブリ言語の開発</p>
-                    <div class="skill-bar">
-                        <div class="skill-progress" data-width="80"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <section id="about" class="container">
+        <h2>企業理念</h2>
+        <p>CREAは、AIやITを駆使して、企業、行政、教育機関などの業務効率化を支援する企業です。最先端の技術を活用し、あらゆる業務において効率化を実現し、クライアントの生産性向上をサポートしています。</p>
+    </section>
 
-        <section id="projects">
-            <h2>Projects</h2>
-            <div class="projects-container">
-                <div class="projects-scroll">
-                    <div class="project-card">
-                        <h3 style="font-weight: 300; letter-spacing: 0.1em;">分散型タスク管理システム</h3>
-                        <p style="opacity: 0.7; margin-top: 1rem;">大規模データ処理基盤の構築</p>
-                        <ul style="margin-top: 1.5rem; list-style: none;">
-                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• Django & Celery による非同期処理</li>
-                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• Redis によるキャッシュ最適化</li>
-                            <li style="opacity: 0.7;">• PostgreSQL でのデータ永続化</li>
-                        </ul>
-                    </div>
-                    <div class="project-card">
-                        <h3 style="font-weight: 300; letter-spacing: 0.1em;">リアルタイムチャット</h3>
-                        <p style="opacity: 0.7; margin-top: 1rem;">スケーラブルな双方向通信システム</p>
-                        <ul style="margin-top: 1.5rem; list-style: none;">
-                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• Go による高速な処理基盤</li>
-                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• WebSocket プロトコルの実装</li>
-                            <li style="opacity: 0.7;">• Redis Pub/Sub アーキテクチャ</li>
-                        </ul>
-                    </div>
-                    <div class="project-card">
-                        <h3 style="font-weight: 300; letter-spacing: 0.1em;">マイクロサービス基盤</h3>
-                        <p style="opacity: 0.7; margin-top: 1rem;">コンテナ化されたサービス群の統合</p>
-                        <ul style="margin-top: 1.5rem; list-style: none;">
-                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• TypeScript & Node.js</li>
-                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• Docker コンテナオーケストレーション</li>
-                            <li style="opacity: 0.7;">• Kubernetes クラスター管理</li>
-                        </ul>
-                    </div>
-                    <div class="project-card">
-                        <h3 style="font-weight: 300; letter-spacing: 0.1em;">API ゲートウェイ</h3>
-                        <p style="opacity: 0.7; margin-top: 1rem;">セキュアなAPI管理基盤</p>
-                        <ul style="margin-top: 1.5rem; list-style: none;">
-                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• 認証・認可システムの実装</li>
-                            <li style="margin-bottom: 0.5rem; opacity: 0.7;">• トラフィック制御と負荷分散</li>
-                            <li style="opacity: 0.7;">• リアルタイムモニタリング</li>
-                        </ul>
-                    </div>
-                </div>
+    <section id="services" class="container">
+        <h2>主なサービス</h2>
+        <div class="services">
+            <div class="service">
+                <h3>AIサービス</h3>
+                <p>業務における作業の効率化を目指すAI技術を提供。</p>
             </div>
-        </section>
+            <div class="service">
+                <h3>ITサービス</h3>
+                <p>デジタルツールやプラットフォームを使った業務の効率化をサポート。</p>
+            </div>
+            <div class="service">
+                <h3>ノーコードツール Dify の活用</h3>
+                <p>特に、Difyを使用し、ノーコードで企業や行政の業務を簡単に効率化します。</p>
+            </div>
+        </div>
+    </section>
 
-        <footer>
-            <div class="social-links">
-                <a href="https://github.com/itukahashinu" target="_blank">Github</a>
+    <section id="industries" class="container">
+        <h2>対象業界</h2>
+        <div class="services">
+            <div class="service">
+                <h3>企業向け</h3>
+                <p>業務の自動化や効率化を進め、企業全体の生産性向上を支援。</p>
             </div>
-        </footer>
-    </div>
+            <div class="service">
+                <h3>行政向け</h3>
+                <p>行政のデジタル化を推進し、業務の効率化と住民サービスの向上を目指します。</p>
+            </div>
+            <div class="service">
+                <h3>教育機関向け</h3>
+                <p>教育のDX（デジタルトランスフォーメーション）を進め、効率的な運営をサポート。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="future" class="container">
+        <h2>目指す未来</h2>
+        <p>時代の最先端を行くビジネスモデルとして、AIやITを活用した業務効率化を広く普及させ、企業、行政、教育の現場をより効率的かつスムーズに進化させていきます。</p>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 CREA. All rights reserved.</p>
+            <p>所在地: 愛知県</p>
+        </div>
+    </footer>
+
+    <div class="scroll-to-top">↑</div>
 
     <script>
-        // スクロールアニメーション
-        function revealOnScroll() {
-            const sections = document.querySelectorAll('section');
-            const skillCards = document.querySelectorAll('.skill-card');
-            const projectCards = document.querySelectorAll('.project-card');
-            
-            const reveal = (elements, className) => {
-                elements.forEach((el, index) => {
-                    const elementTop = el.getBoundingClientRect().top;
-                    const elementBottom = el.getBoundingClientRect().bottom;
-                    const isVisible = (elementTop < window.innerHeight - 50) && (elementBottom > 0);
-                    
-                    if (isVisible) {
-                        setTimeout(() => {
-                            el.classList.add(className);
-                        }, index * 100); // 要素ごとに遅延を付ける
-                    }
-                });
-            };
-
-            reveal(sections, 'visible');
-            reveal(skillCards, 'visible');
-            reveal(projectCards, 'visible');
-        }
-
-        // スキルバーのアニメーション
-        function animateSkillBars() {
-            const skillBars = document.querySelectorAll('.skill-progress');
-            skillBars.forEach(bar => {
-                const width = bar.getAttribute('data-width');
-                setTimeout(() => {
-                    bar.style.width = `${width}%`;
-                }, 500);
-            });
-        }
-
-        // プロジェクトカードのスクロールアニメーション
-        const projectsContainer = document.querySelector('.projects-container');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        projectsContainer.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - projectsContainer.offsetLeft;
-            scrollLeft = projectsContainer.scrollLeft;
-        });
-
-        projectsContainer.addEventListener('mouseleave', () => {
-            isDown = false;
-        });
-
-        projectsContainer.addEventListener('mouseup', () => {
-            isDown = false;
-        });
-
-        projectsContainer.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - projectsContainer.offsetLeft;
-            const walk = (x - startX) * 2;
-            projectsContainer.scrollLeft = scrollLeft - walk;
-        });
-
-        // イベントリスナー
-        window.addEventListener('load', () => {
-            revealOnScroll();
-            animateSkillBars();
-        });
-        
-        window.addEventListener('scroll', () => {
-            revealOnScroll();
-        });
-
-        // スムーズスクロール
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -472,7 +262,42 @@
                 });
             });
         });
-    </script>
-</body>
-</html>
 
+        window.addEventListener('scroll', function() {
+            var header = document.querySelector('header');
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            header.classList.toggle('scrolled', scrollTop > 50);
+
+            var scrollToTop = document.querySelector('.scroll-to-top');
+            scrollToTop.classList.toggle('show', scrollTop > 300);
+        });
+
+        document.querySelector('.scroll-to-top').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+    <!-- Dify Chatbot Integration (Ngrok Tunnel) -->
+    <script>
+        window.difyChatbotConfig = {
+            token: 'QajG4qPMpTCqGz9Y',
+            baseUrl: 'https://0350-2402-6b00-ee0d-9c00-4020-69e3-6ef5-ce59.ngrok-free.app'
+        }
+    </script>
+    <script
+        src="https://0350-2402-6b00-ee0d-9c00-4020-69e3-6ef5-ce59.ngrok-free.app/embed.min.js"
+        id="QajG4qPMpTCqGz9Y"
+        defer>
+    </script>
+    <style>
+        #dify-chatbot-bubble-button {
+            background-color: #1C64F2 !important;
+        }
+        #dify-chatbot-bubble-window {
+            width: 24rem !important;
+            height: 40rem !important;
+        }
+    </style>
+</body>
