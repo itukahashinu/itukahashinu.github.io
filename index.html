@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>CREA - AI・ITで業務効率化を支援</title>
     <style>
         :root {
@@ -283,21 +284,134 @@
     <script>
         window.difyChatbotConfig = {
             token: 'QajG4qPMpTCqGz9Y',
-            baseUrl: 'https://0350-2402-6b00-ee0d-9c00-4020-69e3-6ef5-ce59.ngrok-free.app'
+            baseUrl: 'http://localhost:70069'
         }
     </script>
-    <script
-        src="https://0350-2402-6b00-ee0d-9c00-4020-69e3-6ef5-ce59.ngrok-free.app/embed.min.js"
-        id="QajG4qPMpTCqGz9Y"
-        defer>
+    <script>
+        // Difyスクリプトの動的読み込みとエラーハンドリング
+        function loadDifyScript() {
+            // ステータス表示用の要素を作成
+            const statusDiv = document.createElement('div');
+            statusDiv.style.position = 'fixed';
+            statusDiv.style.bottom = '20px';
+            statusDiv.style.right = '20px';
+            statusDiv.style.padding = '10px';
+            statusDiv.style.borderRadius = '5px';
+            statusDiv.style.zIndex = '9999';
+            statusDiv.style.transition = 'opacity 0.3s ease';
+            document.body.appendChild(statusDiv);
+
+            // ステータスメッセージを表示（読み込み中）
+            statusDiv.style.backgroundColor = '#ffd700';
+            statusDiv.style.color = '#000';
+            statusDiv.textContent = 'チャットボットを読み込み中...';
+
+            const script = document.createElement('script');
+            script.src = 'http://localhost:70069/embed.min.js';
+            script.id = 'QajG4qPMpTCqGz9Y';
+            script.async = true;
+            
+            script.onerror = function() {
+                console.error('Difyスクリプトの読み込みに失敗しました。Ngrok接続を確認してください。');
+                statusDiv.style.backgroundColor = '#ff4444';
+                statusDiv.style.color = 'white';
+                statusDiv.textContent = 'チャットボットの読み込みに失敗しました。';
+                // 5秒後にメッセージを非表示
+                setTimeout(() => {
+                    statusDiv.style.opacity = '0';
+                    setTimeout(() => statusDiv.remove(), 300);
+                }, 5000);
+            };
+
+            script.onload = function() {
+                console.log('Difyスクリプトが正常に読み込まれました。');
+                console.log('設定:', window.difyChatbotConfig);
+
+                // チャットボットの初期化を監視
+                const checkBubble = setInterval(() => {
+                    const bubble = document.querySelector('#dify-chatbot-bubble-button');
+                    const window = document.querySelector('#dify-chatbot-bubble-window');
+                    
+                    if (bubble || window) {
+                        console.log('チャットボット要素を検出:', {
+                            bubble: bubble ? 'あり' : 'なし',
+                            window: window ? 'あり' : 'なし'
+                        });
+                        clearInterval(checkBubble);
+                        
+                        statusDiv.style.backgroundColor = '#4CAF50';
+                        statusDiv.style.color = 'white';
+                        statusDiv.textContent = 'チャットボットの準備ができました';
+                        setTimeout(() => {
+                            statusDiv.style.opacity = '0';
+                            setTimeout(() => statusDiv.remove(), 300);
+                        }, 3000);
+                    }
+                }, 500);
+
+                // 10秒後にチャットボットが見つからない場合
+                setTimeout(() => {
+                    if (statusDiv.parentNode) {
+                        console.error('チャットボット要素が見つかりませんでした');
+                        statusDiv.style.backgroundColor = '#ff4444';
+                        statusDiv.style.color = 'white';
+                        statusDiv.textContent = 'チャットボットの初期化に失敗しました';
+                        setTimeout(() => {
+                            statusDiv.style.opacity = '0';
+                            setTimeout(() => statusDiv.remove(), 300);
+                        }, 5000);
+                    }
+                    clearInterval(checkBubble);
+                }, 10000);
+            };
+
+            document.body.appendChild(script);
+        }
+
+        // ページ読み込み完了後にDifyスクリプトを読み込む
+        window.addEventListener('load', loadDifyScript);
+
+        // Ngrok接続の状態を定期的にチェック
+        function checkConnection() {
+            fetch('http://localhost:70069/health-check')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ngrok接続が切断されました');
+                    }
+                })
+                .catch(error => {
+                    console.error('Ngrok接続エラー:', error);
+                    // 接続エラー時に再読み込みを試みる
+                    loadDifyScript();
+                });
+        }
+        
+        // 30秒ごとに接続をチェック
+        setInterval(checkConnection, 30000);
     </script>
     <style>
         #dify-chatbot-bubble-button {
             background-color: #1C64F2 !important;
+            z-index: 10000 !important;
+            bottom: 20px !important;
+            right: 20px !important;
+            width: 60px !important;
+            height: 60px !important;
+            border-radius: 30px !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
         }
         #dify-chatbot-bubble-window {
             width: 24rem !important;
             height: 40rem !important;
+            z-index: 10000 !important;
+            bottom: 100px !important;
+            right: 20px !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        }
+        /* ステータスメッセージのz-indexを他の要素より低く設定 */
+        #dify-status-message {
+            z-index: 9999 !important;
         }
     </style>
 </body>
